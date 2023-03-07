@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# using xidel to find new mac stuffs on nhattao.com
+# nhattao "mac mini" 30 15000000 33000000 HoChiMinh
+# nhattao "macbook pro 14" 30 15000000 36000000 HoChiMinh
+
+QUERY="$1"
+LAST_DAYS=$2
+MIN_PRICE=$3
+MAX_PRICE=$4
+LOCATION=$5
+SINCE=$(date -v -"$LAST_DAYS"d +%s)
+ORDER_BY=date
+
+DOMAIN="https://nhattao.com"
+SEARCH_URL="$DOMAIN/search/search"
+
+echo ""
+echo "Find: $QUERY | Last $LAST_DAYS days | Min Price: $MIN_PRICE | Max Price: $MAX_PRICE | Location: $LOCATION"
+
+TEMPLATE="string-join(('$DOMAIN/', //form[@class='tagView_formFilters']/@action, '&min_price=$MIN_PRICE&max_price=$MAX_PRICE'), '')"
+NEXT_URL=$(xidel -s \
+      -d "keywords=$QUERY" \
+      -d "date=$SINCE" \
+      -d "nodes[]=483" \
+      -d "child_nodes=1" \
+      -d "order=$ORDER_BY" \
+      -d "tinhte_classified_location=$LOCATION" \
+      -d "tinhte_classified_status=0" \
+      "$SEARCH_URL" -e "$TEMPLATE")
+
+if [[ "$NEXT_URL" = "https://nhattao.com/&min_price=$MIN_PRICE&max_price=$MAX_PRICE" ]]; then
+      echo "NO ITEMS"
+      exit;
+fi
+
+TEMPLATE=$(cat <<EOF
+<t:loop t:optional="true">
+  {__:=__}
+  <span class="classified_thread_list_price">{price:=normalize-space(.)}</span>
+  <h3 class="title">{title:=.}</h3>
+  <a>{link:=string-join(("$DOMAIN", replace(@href, "\?(.*)", "")),"/")}</a>
+</t:loop>
+EOF
+)
+xidel -s "$NEXT_URL" -e "$TEMPLATE"
