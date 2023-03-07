@@ -16,7 +16,7 @@ DOMAIN="https://nhattao.com"
 SEARCH_URL="$DOMAIN/search/search"
 
 echo "————————————————————————————————————————————————————————————————————————————————"
-echo ">: $QUERY | Last $LAST_DAYS days | Min Price: $MIN_PRICE | Max Price: $MAX_PRICE | Location: $LOCATION"
+echo "> $QUERY | Last $LAST_DAYS days | Price: $MIN_PRICE - $MAX_PRICE | Location: $LOCATION"
 echo "————————————————————————————————————————————————————————————————————————————————"
 
 TEMPLATE="string-join(('$DOMAIN/', //form[@class='tagView_formFilters']/@action), '')"
