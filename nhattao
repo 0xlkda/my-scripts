@@ -4,12 +4,12 @@
 # nhattao "mac mini" 30 15000000 33000000 HoChiMinh
 # nhattao "macbook pro 14" 30 15000000 36000000 HoChiMinh
 
-QUERY="$1"
-LAST_DAYS=$2
-MIN_PRICE=$3
-MAX_PRICE=$4
-LOCATION=$5
-CATEGORY=${6:-483}
+QUERY="${1:-'mac mini'}"
+LAST_DAYS=${2:-7}
+MIN_PRICE=${3:-0}
+MAX_PRICE=${4:-100000000}
+LOCATION=${5:-'HoChiMinh'}
+CATEGORY=${6:-0}
 SINCE=$(date -v -"$LAST_DAYS"d +%s)
 ORDER_BY=date
 
