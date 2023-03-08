@@ -9,6 +9,7 @@ LAST_DAYS=$2
 MIN_PRICE=$3
 MAX_PRICE=$4
 LOCATION=$5
+CATEGORY=${6:-483}
 SINCE=$(date -v -"$LAST_DAYS"d +%s)
 ORDER_BY=date
 
@@ -23,7 +24,7 @@ TEMPLATE="string-join(('$DOMAIN/', //form[@class='tagView_formFilters']/@action)
 NEXT_URL=$(xidel -s \
   -d "keywords=$QUERY" \
   -d "date=$SINCE" \
-  -d "nodes[]=483" \
+  -d "nodes[]=$CATEGORY" \
   -d "child_nodes=1" \
   -d "order=$ORDER_BY" \
   -d "tinhte_classified_location=$LOCATION" \
