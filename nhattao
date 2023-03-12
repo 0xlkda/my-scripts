@@ -6,8 +6,8 @@
 
 QUERY="${1:-'mac mini'}"
 LAST_DAYS=${2:-7}
-MIN_PRICE=${3:-0}
-MAX_PRICE=${4:-100000000}
+MAX_PRICE=${3:-100000000}
+MIN_PRICE=${4:-0}
 LOCATION=${5:-0}
 CATEGORY=${6:-0}
 SINCE=$(date -v -"$LAST_DAYS"d +%s)
