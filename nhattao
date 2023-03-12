@@ -5,10 +5,10 @@
 # nhattao "macbook pro 14" 30 15000000 36000000 HoChiMinh
 
 QUERY="${1:-'mac mini'}"
-LAST_DAYS=${2:-7}
+LAST_DAYS=${2:-14}
 MAX_PRICE=${3:-100000000}
 MIN_PRICE=${4:-0}
-LOCATION=${5:-0}
+LOCATION=${5:-HoChiMinh} # use 0 for toan quoc
 CATEGORY=${6:-0}
 SINCE=$(date -v -"$LAST_DAYS"d +%s)
 ORDER_BY=date
@@ -39,10 +39,11 @@ fi
 
 TEMPLATE=$(cat <<EOF
 <t:loop t:optional="true">
-  <span class="classified_thread_list_price">{price:=normalize-space(.)}</span>
-  <h3 class="title">{title := normalize-space(.)}</h3>
+  <span class="classified_thread_list_price">{prices := normalize-space(.)}</span>
+  <h3 class="title">{titles := normalize-space(.)}</h3>
   <a>{links := string-join(("$DOMAIN", replace(@href, "\?(.*)", "")),"/")}</a>
-  {headings := string-join((\$price, \$title), " | ")}
+  <abbr class="DateTime">{dates := @data-datestring}</abbr>
+  <span class="locationPrefix prefix prefixPrimary">{locations := normalize-space(.)}</span>
 </t:loop>
 EOF
 )
@@ -50,16 +51,16 @@ EOF
 # apply everything from xidel to $SHELL variables
 eval $(xidel $NEXT_URL \
   --silent \
-  --extract-include="headings,links" \
+  --extract-include="prices,titles,links,dates,locations" \
   --hide-variable-names \
   --extract "$TEMPLATE" \
   --output-format="bash")
 
 # results
-len=${#headings[@]}
+len=${#prices[@]}
 for (( idx = 0; idx < len; idx++ ));
 do
-  echo "${headings[idx]}"
-  echo "${links[idx]}\n"
+  echo "${prices[idx]} • ${titles[idx]}"
+  echo "${locations[idx]} • ${dates[idx]} • ${links[idx]}\n"
 done
 
