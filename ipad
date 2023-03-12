@@ -1,0 +1,7 @@
+#!/bin/sh
+
+LAST=${1:-30}
+LOCATION=HoChiMinh
+
+nhattao "ipad" $LAST 4500000 0 $LOCATION
+
