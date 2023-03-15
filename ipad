@@ -2,6 +2,7 @@
 
 LAST=${1:-30}
 LOCATION=HoChiMinh
+CATEGORY=569
 
-nhattao "ipad" $LAST 4500000 0 $LOCATION
+nhattao "ipad" $LAST 8000000 0 $LOCATION $CATEGORY
 
