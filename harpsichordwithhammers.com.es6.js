@@ -1,3 +1,10 @@
+/*
+2023-04-15 17:43 GMT+7
+after mailed to Gary, the author. He did some changes!
+now original content sorted & grouped as-is
+well done!
+*/
+
 let uniq = list => Array.from(new Set(list));
 let not = (query) => i => i.textContent !== query;
 let notSubject = i => i !== 'Subject';

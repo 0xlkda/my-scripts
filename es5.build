@@ -1,0 +1,3 @@
+#!/bin/bash
+
+swc $1 -o $2

@@ -1,4 +1,9 @@
-function _array_like_to_array(arr, len) {
+/*
+2023-04-15 17:43 GMT+7
+after mailed to Gary, the author. He did some changes!
+now original content sorted & grouped as-is
+well done!
+*/ function _array_like_to_array(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
@@ -78,3 +83,4 @@ function createTrigger(subject) {
     };
     return trigger;
 }
+
